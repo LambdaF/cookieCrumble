@@ -17,7 +17,7 @@ Parse cookies and their HTTPOnly and/or Secure flag from given URL(s)
   https://old.reddit.com/r/programming/
 ```
 
-## Example command
+## Example usage:
 `python3 cookieCrumble.py -t input.txt`
 
 ## Example output: crumbled.csv

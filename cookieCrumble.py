@@ -84,7 +84,6 @@ def main(targets, outfile):
             url = ""
             for cookie in result:
                 url = cookie[0] if url is "" else ".."
-                print(cookie)
                 f.write("{url},{name},{httponly},{secure}\n".format(
                     url=url, name=cookie[1],
                     httponly="Yes" if cookie[2] else "No",

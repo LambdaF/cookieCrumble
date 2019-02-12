@@ -10,27 +10,23 @@ from requests.packages.urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
-'''
-Attempts to check if the schema of a given URL is valid,
-prepends given schema if not; default HTTPS
-'''
-
-
 def checkSchema(target, schema="https"):
+    """
+    Attempts to check if the schema of a given URL is valid,
+    prepends given schema if not; default HTTPS
+    """
     parsed = urllib.parse.urlparse(target)
     return "{schema}://{target}".format(target=target, schema=schema) \
         if not bool(parsed.scheme) else target
 
 
-'''
-Parses a given target(s) - if a file is provided,
-attempts to parse assuming it's newline separated
-Also accepts a single target
-Returns results as a set
-'''
-
-
 def parseTargets(targets: str) -> set:
+    """
+    Parses a given target(s) - if a file is provided,
+    attempts to parse assuming it's newline separated
+    Also accepts a single target
+    Returns results as a set
+    """
     results = []
     if os.path.isfile(targets):
         with open(targets) as f:
@@ -41,13 +37,11 @@ def parseTargets(targets: str) -> set:
     return set(results)
 
 
-'''
-Gets cookies for a given URL and returns them in a 4 part tuple in the form:
-(URL, cookie name, bool(HTTPOnly), bool(secure))
-'''
-
-
 def getCookies(url: str) -> list:
+    """
+    Gets cookies for a given URL and returns them in a 4 part tuple in the form
+    (URL, cookie name, bool(HTTPOnly), bool(secure))
+    """
     try:
         result = requests.get(url, verify=False, timeout=3)
     except Exception as e:
@@ -66,13 +60,11 @@ def getCookies(url: str) -> list:
     return cookies
 
 
-'''
-Main function, takes a target name/file and parses them,
-passes to thread pool and ultimately writes to the outfile in CSV format
-'''
-
-
 def main(targets, outfile):
+    """
+    Main function, takes a target name/file and parses them,
+    passes to thread pool and ultimately writes to the outfile in CSV format
+    """
     targets = parseTargets(targets)
 
     with ThreadPoolExecutor(max_workers=5) as executor:
